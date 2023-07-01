@@ -1,0 +1,103 @@
+<odoo>
+  <data>
+ <!-- Membuat View Tree/List Course -->
+ 
+<record id="hr_family_view_tree" model="ir.ui.view">
+    <field name="name">hr.family.tree</field>
+    <field name="model">hr.family</field>
+    <field name="arch" type="xml">
+        <tree string="Course List">
+            <field name="name"/>
+            <field name="marriage_status"/>
+            <field name="birthday"/>
+            <field name="sex"/>
+            <field name="marital"/>
+        </tree>
+    </field>
+</record>
+ 
+<!-- Membuat View Form Course -->
+ 
+<record id="hr_family_view_form" model="ir.ui.view">
+    <field name="name">hr.family.form</field>
+    <field name="model">hr.family</field>
+    <field name="arch" type="xml">
+        <form string="Course Form">
+            <sheet>
+                <group>
+                    <field name="name"/>
+                    <field name="marriage_status"/>
+                    <field name="birthday"/>
+                    <field name="sex"/>
+                    <field name="marital"/>
+                </group>
+                <notebook>
+                    <page string="Keterangan">
+                        <group>
+                            <field name="description"/>
+                        </group>
+                    </page>
+                </notebook>
+            </sheet>
+        </form>
+    </field>
+</record>
+ 
+<!-- Membuat Action/Event Course -->
+ 
+<record id="hr_family_action" model="ir.actions.act_window">
+    <field name="name">Family</field>
+    <field name="res_model">hr.family</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+        <p name="o_view_nocontent_smiling_face">
+            Buatlah kursus pertamamu ...
+        </p>
+    </field>
+</record>
+
+   <!-- Mengcustom View Form Partner -->
+ 
+    <record id="family_hr_employee_view_form" model="ir.ui.view">
+        <field name="name">family.hr.employee.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+        <xpath expr="//field[@name='department_id']" position="before">            
+                <field name="status" />
+                <field name="notes" />
+        </xpath>
+            <xpath expr="//page[@name='personal_information']" position="after">
+                <page string="Family Information">
+                    <group>
+                        <field name="family_ids"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Membuat Action/Event Employee -->
+    
+    <record id="hr_employee_action" model="ir.actions.act_window">
+        <field name="name">Employee</field>
+        <field name="res_model">hr.employee</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+ 
+<!-- Membuat Menu Dashboard -->
+ 
+<menuitem id="menu_dashboard_hr_family" name="HR Family" web_icon="hr_family,static/icon.png"/>
+ 
+<!-- Membuat Menu Bar Training -->
+ 
+<menuitem id="menu_bar_hr_family" name="Family" parent="menu_dashboard_hr_family"/>
+ 
+<!-- Membuat Menu Item Course -->
+ 
+<menuitem id="menu_item_hr_family" name="Hr Family" parent="menu_bar_hr_family" action="hr_family_action"/>
+<menuitem id="menu_item_hr_employee" name="Hr Employee" parent="menu_bar_hr_family" action="hr_employee_action"/>
+
+
+  </data>
+</odoo>
